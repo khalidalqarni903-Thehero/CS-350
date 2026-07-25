@@ -416,4 +416,378 @@ VALUES
      'Headache and dizziness', 'Completed',
      'Blood pressure and glucose tested');
 
+-- =========================================================
+-- 5. TREATMENT: 8 records
+-- =========================================================
+INSERT INTO Treatment
+    (TreatmentID, AppointmentID, TreatmentName, Diagnosis,
+     Description, TreatmentDate, Cost)
+VALUES
+    (1, 1, 'General Examination', 'Routine health assessment',
+     'Vital signs and general physical examination',
+     '2026-02-01', 200.00),
 
+    (2, 2, 'Cardiac Assessment', 'Mild hypertension',
+     'Blood pressure evaluation and ECG examination',
+     '2026-02-01', 450.00),
+
+    (3, 3, 'Abdominal Examination', 'Gallbladder inflammation',
+     'Clinical examination and ultrasound referral',
+     '2026-02-02', 600.00),
+
+    (4, 4, 'Dermatology Consultation', 'Allergic dermatitis',
+     'Skin examination and allergy treatment plan',
+     '2026-02-03', 350.00),
+
+    (5, 5, 'Respiratory Examination', 'Acute pharyngitis',
+     'Throat examination and supportive treatment',
+     '2026-02-04', 250.00),
+
+    (6, 6, 'Vaccination Service', 'Preventive pediatric care',
+     'Age-appropriate vaccination administered',
+     '2026-02-05', 300.00),
+
+    (7, 7, 'Knee Wound Treatment', 'Minor knee laceration',
+     'Wound cleaning, local anaesthesia, and suturing',
+     '2026-02-06', 750.00),
+
+    (8, 8, 'Neurological Screening', 'Tension headache',
+     'Basic neurological examination and pain management',
+     '2026-02-07', 300.00);
+
+
+-- =========================================================
+-- 6. PRESCRIPTION: 8 records
+-- =========================================================
+INSERT INTO Prescription
+    (PrescriptionID, AppointmentID, PrescriptionDate, Instructions)
+VALUES
+    (1, 1, '2026-02-01',
+     'Take the medicine after meals when required'),
+
+    (2, 2, '2026-02-01',
+     'Take regularly and monitor blood pressure'),
+
+    (3, 3, '2026-02-02',
+     'Use until the scheduled follow-up examination'),
+
+    (4, 4, '2026-02-03',
+     'Apply the cream to the affected area'),
+
+    (5, 5, '2026-02-04',
+     'Complete the prescribed treatment period'),
+
+    (6, 6, '2026-02-05',
+     'Use fever medicine only when necessary'),
+
+    (7, 7, '2026-02-06',
+     'Take after food and keep the wound dry'),
+
+    (8, 8, '2026-02-07',
+     'Take when headache symptoms occur');
+
+
+-- =========================================================
+-- 7. MEDICINE: 8 records
+-- =========================================================
+INSERT INTO Medicine
+    (MedicineID, MedicineName, Description, UnitPrice,
+     StockQuantity, ExpiryDate)
+VALUES
+    (1, 'Paracetamol 500 mg',
+     'Pain reliever and fever reducer',
+     12.50, 200, '2028-06-30'),
+
+    (2, 'Amlodipine 5 mg',
+     'Medicine used to control high blood pressure',
+     28.00, 120, '2028-03-31'),
+
+    (3, 'Amoxicillin 500 mg',
+     'Antibiotic used for bacterial infections',
+     35.00, 100, '2027-12-31'),
+
+    (4, 'Hydrocortisone Cream 1%',
+     'Topical cream used for skin inflammation',
+     22.00, 80, '2027-09-30'),
+
+    (5, 'Ibuprofen 400 mg',
+     'Anti-inflammatory medicine and pain reliever',
+     18.50, 150, '2028-01-31'),
+
+    (6, 'Omeprazole 20 mg',
+     'Medicine used to reduce stomach acid',
+     30.00, 110, '2028-04-30'),
+
+    (7, 'Cetirizine 10 mg',
+     'Antihistamine used for allergic symptoms',
+     16.00, 130, '2027-11-30'),
+
+    (8, 'Povidone-Iodine Solution',
+     'Antiseptic solution used for wound cleaning',
+     24.00, 70, '2028-02-28');
+
+
+-- =========================================================
+-- 8. PRESCRIPTION_MEDICINE: 10 records
+-- =========================================================
+INSERT INTO Prescription_Medicine
+    (PrescriptionID, MedicineID, Dosage, Frequency,
+     DurationDays, Quantity)
+VALUES
+    (1, 1, '500 mg', 'When required', 5, 10),
+
+    (2, 2, '5 mg', 'Once daily', 30, 30),
+
+    (3, 6, '20 mg', 'Once daily before breakfast', 14, 14),
+
+    (3, 1, '500 mg', 'Twice daily', 5, 10),
+
+    (4, 4, 'Thin layer', 'Twice daily', 7, 1),
+
+    (4, 7, '10 mg', 'Once daily', 7, 7),
+
+    (5, 3, '500 mg', 'Three times daily', 7, 21),
+
+    (6, 1, '500 mg', 'When required', 3, 6),
+
+    (7, 5, '400 mg', 'Twice daily after food', 5, 10),
+
+    (8, 1, '500 mg', 'When required', 5, 10);
+
+
+-- =========================================================
+-- 9. PAYMENT: 8 records
+-- =========================================================
+INSERT INTO Payment
+    (PaymentID, AppointmentID, PaymentDate, Amount,
+     PaymentMethod, PaymentStatus, ReferenceNumber)
+VALUES
+    (1, 1, '2026-02-01 09:45:00', 200.00,
+     'Cash', 'Paid', 'PAY-KSA-2026-001'),
+
+    (2, 2, '2026-02-01 11:20:00', 450.00,
+     'Credit Card', 'Paid', 'PAY-KSA-2026-002'),
+
+    (3, 3, '2026-02-02 12:10:00', 600.00,
+     'Insurance', 'Paid', 'PAY-KSA-2026-003'),
+
+    (4, 4, '2026-02-03 13:45:00', 350.00,
+     'Debit Card', 'Paid', 'PAY-KSA-2026-004'),
+
+    (5, 5, '2026-02-04 10:15:00', 250.00,
+     'Cash', 'Paid', 'PAY-KSA-2026-005'),
+
+    (6, 6, '2026-02-05 10:50:00', 300.00,
+     'Insurance', 'Paid', 'PAY-KSA-2026-006'),
+
+    (7, 7, '2026-02-06 13:20:00', 750.00,
+     'Bank Transfer', 'Paid', 'PAY-KSA-2026-007'),
+
+    (8, 8, '2026-02-07 14:40:00', 300.00,
+     'Credit Card', 'Paid', 'PAY-KSA-2026-008');
+
+
+SELECT
+    PatientID,
+    FirstName,
+    MiddleName,
+    LastName,
+    DateOfBirth,
+    Gender,
+    Phone,
+    Email,
+    Address,
+    RegistrationDate
+FROM Patient
+ORDER BY LastName, FirstName;
+
+SELECT
+    AppointmentID,
+    PatientID,
+    DoctorID,
+    AppointmentDate,
+    AppointmentTime,
+    Reason,
+    Status
+FROM Appointment
+WHERE Status = 'Completed'
+ORDER BY AppointmentDate, AppointmentTime;
+
+SELECT
+    a.AppointmentID,
+    CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
+    CONCAT(d.FirstName, ' ', d.LastName) AS DoctorName,
+    d.DoctorType,
+    a.AppointmentDate,
+    a.AppointmentTime,
+    a.Reason,
+    a.Status
+FROM Appointment AS a
+INNER JOIN Patient AS p
+    ON a.PatientID = p.PatientID
+INNER JOIN Doctor AS d
+    ON a.DoctorID = d.DoctorID
+ORDER BY a.AppointmentDate, a.AppointmentTime;
+
+SELECT
+    pr.PrescriptionID,
+    pr.AppointmentID,
+    m.MedicineName,
+    pm.Dosage,
+    pm.Frequency,
+    pm.DurationDays,
+    pm.Quantity
+FROM Prescription AS pr
+INNER JOIN Prescription_Medicine AS pm
+    ON pr.PrescriptionID = pm.PrescriptionID
+INNER JOIN Medicine AS m
+    ON pm.MedicineID = m.MedicineID
+ORDER BY pr.PrescriptionID, m.MedicineName;
+
+SELECT
+    p.PatientID,
+    CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
+    a.AppointmentID,
+    pay.PaymentID,
+    pay.Amount,
+    pay.PaymentMethod,
+    pay.PaymentStatus
+FROM Patient AS p
+LEFT JOIN Appointment AS a
+    ON p.PatientID = a.PatientID
+LEFT JOIN Payment AS pay
+    ON a.AppointmentID = pay.AppointmentID
+ORDER BY p.PatientID, a.AppointmentID;
+
+SELECT
+    TreatmentID,
+    AppointmentID,
+    TreatmentName,
+    Diagnosis,
+    Cost
+FROM Treatment
+WHERE Cost > (
+    SELECT AVG(Cost)
+    FROM Treatment
+)
+ORDER BY Cost DESC;
+
+SELECT
+    PatientID,
+    FirstName,
+    LastName,
+    Phone
+FROM Patient
+WHERE PatientID IN (
+    SELECT PatientID
+    FROM Appointment
+    WHERE Status = 'Completed'
+)
+ORDER BY LastName, FirstName;
+
+SELECT
+    d.DoctorID,
+    CONCAT(d.FirstName, ' ', d.LastName) AS DoctorName,
+    COUNT(a.AppointmentID) AS TotalAppointments
+FROM Doctor AS d
+LEFT JOIN Appointment AS a
+    ON d.DoctorID = a.DoctorID
+GROUP BY
+    d.DoctorID,
+    d.FirstName,
+    d.LastName
+ORDER BY TotalAppointments DESC;
+
+SELECT
+    PaymentMethod,
+    COUNT(PaymentID) AS NumberOfPayments,
+    SUM(Amount) AS TotalAmount,
+    AVG(Amount) AS AverageAmount
+FROM Payment
+WHERE PaymentStatus = 'Paid'
+GROUP BY PaymentMethod
+ORDER BY TotalAmount DESC;
+
+UPDATE Appointment
+SET
+    Status = 'Cancelled',
+    Notes = 'Appointment status updated by clinic administration'
+WHERE AppointmentID = 8;
+
+DELETE FROM Medicine
+WHERE MedicineID = 8
+  AND StockQuantity = 0
+  AND MedicineID NOT IN (
+      SELECT MedicineID
+      FROM Prescription_Medicine
+  );
+
+CREATE OR REPLACE VIEW Appointment_Summary AS
+SELECT
+    a.AppointmentID,
+    a.AppointmentDate,
+    a.AppointmentTime,
+    a.Status AS AppointmentStatus,
+    a.Reason,
+    p.PatientID,
+    CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
+    p.Phone AS PatientPhone,
+    d.DoctorID,
+    CONCAT(d.FirstName, ' ', d.LastName) AS DoctorName,
+    d.DoctorType,
+    COALESCE(SUM(pay.Amount), 0.00) AS TotalPaid
+FROM Appointment AS a
+INNER JOIN Patient AS p
+    ON a.PatientID = p.PatientID
+INNER JOIN Doctor AS d
+    ON a.DoctorID = d.DoctorID
+LEFT JOIN Payment AS pay
+    ON a.AppointmentID = pay.AppointmentID
+   AND pay.PaymentStatus = 'Paid'
+GROUP BY
+    a.AppointmentID,
+    a.AppointmentDate,
+    a.AppointmentTime,
+    a.Status,
+    a.Reason,
+    p.PatientID,
+    p.FirstName,
+    p.LastName,
+    p.Phone,
+    d.DoctorID,
+    d.FirstName,
+    d.LastName,
+    d.DoctorType;
+
+
+
+SELECT *
+FROM Appointment_Summary
+ORDER BY AppointmentDate, AppointmentTime;
+
+DROP TRIGGER IF EXISTS TRG_Patient_Before_Insert;
+
+
+
+DROP TRIGGER IF EXISTS TRG_Patient_Before_Insert;
+
+DELIMITER //
+
+CREATE TRIGGER TRG_Patient_Before_Insert
+BEFORE INSERT ON Patient
+FOR EACH ROW
+BEGIN
+    IF NEW.DateOfBirth > CURDATE() THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT =
+            'Date of birth cannot be later than the current date';
+    END IF;
+END//
+
+DELIMITER ;
+
+INSERT INTO Patient
+    (FirstName, LastName, DateOfBirth, Gender, Phone, RegistrationDate)
+VALUES
+    ('Test', 'Patient', '2030-01-01', 'Male',
+     '0599999999', CURRENT_DATE);
