@@ -1,7 +1,3 @@
-
-
-
-
 USE SmartClinicDB;
 
 
