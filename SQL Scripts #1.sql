@@ -23,8 +23,6 @@ CREATE TABLE Patient (
     CONSTRAINT UQ_Patient_Email
         UNIQUE (Email)
 );
-
-
 -- 2. Doctor superclass table
 CREATE TABLE Doctor (
     DoctorID INT UNSIGNED AUTO_INCREMENT,
