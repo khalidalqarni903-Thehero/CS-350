@@ -356,6 +356,7 @@ VALUES
      'Specialist');
 
 
+
 -- =========================================================
 -- 3. DOCTOR SUBTYPE TABLES
 -- =========================================================
@@ -375,6 +376,7 @@ INSERT INTO Surgeon_Doctor (DoctorID, OperationTheater)
 VALUES
     (3, 'Operation Theater 1'),
     (6, 'Operation Theater 2');
+
 
 
 -- =========================================================
@@ -416,6 +418,8 @@ VALUES
      'Headache and dizziness', 'Completed',
      'Blood pressure and glucose tested');
 
+
+
 -- =========================================================
 -- 5. TREATMENT: 8 records
 -- =========================================================
@@ -456,6 +460,7 @@ VALUES
      '2026-02-07', 300.00);
 
 
+
 -- =========================================================
 -- 6. PRESCRIPTION: 8 records
 -- =========================================================
@@ -485,6 +490,7 @@ VALUES
 
     (8, 8, '2026-02-07',
      'Take when headache symptoms occur');
+
 
 
 -- =========================================================
@@ -527,6 +533,7 @@ VALUES
      24.00, 70, '2028-02-28');
 
 
+
 -- =========================================================
 -- 8. PRESCRIPTION_MEDICINE: 10 records
 -- =========================================================
@@ -555,3 +562,241 @@ VALUES
     (8, 1, '500 mg', 'When required', 5, 10);
 
 
+
+
+-- =========================================================
+-- 9. PAYMENT: 8 records
+-- =========================================================
+INSERT INTO Payment
+    (PaymentID, AppointmentID, PaymentDate, Amount,
+     PaymentMethod, PaymentStatus, ReferenceNumber)
+VALUES
+    (1, 1, '2026-02-01 09:45:00', 200.00,
+     'Cash', 'Paid', 'PAY-KSA-2026-001'),
+
+    (2, 2, '2026-02-01 11:20:00', 450.00,
+     'Credit Card', 'Paid', 'PAY-KSA-2026-002'),
+
+    (3, 3, '2026-02-02 12:10:00', 600.00,
+     'Insurance', 'Paid', 'PAY-KSA-2026-003'),
+
+    (4, 4, '2026-02-03 13:45:00', 350.00,
+     'Debit Card', 'Paid', 'PAY-KSA-2026-004'),
+
+    (5, 5, '2026-02-04 10:15:00', 250.00,
+     'Cash', 'Paid', 'PAY-KSA-2026-005'),
+
+    (6, 6, '2026-02-05 10:50:00', 300.00,
+     'Insurance', 'Paid', 'PAY-KSA-2026-006'),
+
+    (7, 7, '2026-02-06 13:20:00', 750.00,
+     'Bank Transfer', 'Paid', 'PAY-KSA-2026-007'),
+
+    (8, 8, '2026-02-07 14:40:00', 300.00,
+     'Credit Card', 'Paid', 'PAY-KSA-2026-008');
+
+
+SELECT
+    PatientID,
+    FirstName,
+    MiddleName,
+    LastName,
+    DateOfBirth,
+    Gender,
+    Phone,
+    Email,
+    Address,
+    RegistrationDate
+FROM Patient
+ORDER BY LastName, FirstName;
+
+SELECT
+    AppointmentID,
+    PatientID,
+    DoctorID,
+    AppointmentDate,
+    AppointmentTime,
+    Reason,
+    Status
+FROM Appointment
+WHERE Status = 'Completed'
+ORDER BY AppointmentDate, AppointmentTime;
+
+SELECT
+    a.AppointmentID,
+    CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
+    CONCAT(d.FirstName, ' ', d.LastName) AS DoctorName,
+    d.DoctorType,
+    a.AppointmentDate,
+    a.AppointmentTime,
+    a.Reason,
+    a.Status
+FROM Appointment AS a
+INNER JOIN Patient AS p
+    ON a.PatientID = p.PatientID
+INNER JOIN Doctor AS d
+    ON a.DoctorID = d.DoctorID
+ORDER BY a.AppointmentDate, a.AppointmentTime;
+
+SELECT
+    pr.PrescriptionID,
+    pr.AppointmentID,
+    m.MedicineName,
+    pm.Dosage,
+    pm.Frequency,
+    pm.DurationDays,
+    pm.Quantity
+FROM Prescription AS pr
+INNER JOIN Prescription_Medicine AS pm
+    ON pr.PrescriptionID = pm.PrescriptionID
+INNER JOIN Medicine AS m
+    ON pm.MedicineID = m.MedicineID
+ORDER BY pr.PrescriptionID, m.MedicineName;
+
+SELECT
+    p.PatientID,
+    CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
+    a.AppointmentID,
+    pay.PaymentID,
+    pay.Amount,
+    pay.PaymentMethod,
+    pay.PaymentStatus
+FROM Patient AS p
+LEFT JOIN Appointment AS a
+    ON p.PatientID = a.PatientID
+LEFT JOIN Payment AS pay
+    ON a.AppointmentID = pay.AppointmentID
+ORDER BY p.PatientID, a.AppointmentID;
+
+SELECT
+    TreatmentID,
+    AppointmentID,
+    TreatmentName,
+    Diagnosis,
+    Cost
+FROM Treatment
+WHERE Cost > (
+    SELECT AVG(Cost)
+    FROM Treatment
+)
+ORDER BY Cost DESC;
+
+SELECT
+    PatientID,
+    FirstName,
+    LastName,
+    Phone
+FROM Patient
+WHERE PatientID IN (
+    SELECT PatientID
+    FROM Appointment
+    WHERE Status = 'Completed'
+)
+ORDER BY LastName, FirstName;
+
+SELECT
+    d.DoctorID,
+    CONCAT(d.FirstName, ' ', d.LastName) AS DoctorName,
+    COUNT(a.AppointmentID) AS TotalAppointments
+FROM Doctor AS d
+LEFT JOIN Appointment AS a
+    ON d.DoctorID = a.DoctorID
+GROUP BY
+    d.DoctorID,
+    d.FirstName,
+    d.LastName
+ORDER BY TotalAppointments DESC;
+
+SELECT
+    PaymentMethod,
+    COUNT(PaymentID) AS NumberOfPayments,
+    SUM(Amount) AS TotalAmount,
+    AVG(Amount) AS AverageAmount
+FROM Payment
+WHERE PaymentStatus = 'Paid'
+GROUP BY PaymentMethod
+ORDER BY TotalAmount DESC;
+
+UPDATE Appointment
+SET
+    Status = 'Cancelled',
+    Notes = 'Appointment status updated by clinic administration'
+WHERE AppointmentID = 8;
+
+DELETE FROM Medicine
+WHERE MedicineID = 8
+  AND StockQuantity = 0
+  AND MedicineID NOT IN (
+      SELECT MedicineID
+      FROM Prescription_Medicine
+  );
+
+CREATE OR REPLACE VIEW Appointment_Summary AS
+SELECT
+    a.AppointmentID,
+    a.AppointmentDate,
+    a.AppointmentTime,
+    a.Status AS AppointmentStatus,
+    a.Reason,
+    p.PatientID,
+    CONCAT(p.FirstName, ' ', p.LastName) AS PatientName,
+    p.Phone AS PatientPhone,
+    d.DoctorID,
+    CONCAT(d.FirstName, ' ', d.LastName) AS DoctorName,
+    d.DoctorType,
+    COALESCE(SUM(pay.Amount), 0.00) AS TotalPaid
+FROM Appointment AS a
+INNER JOIN Patient AS p
+    ON a.PatientID = p.PatientID
+INNER JOIN Doctor AS d
+    ON a.DoctorID = d.DoctorID
+LEFT JOIN Payment AS pay
+    ON a.AppointmentID = pay.AppointmentID
+   AND pay.PaymentStatus = 'Paid'
+GROUP BY
+    a.AppointmentID,
+    a.AppointmentDate,
+    a.AppointmentTime,
+    a.Status,
+    a.Reason,
+    p.PatientID,
+    p.FirstName,
+    p.LastName,
+    p.Phone,
+    d.DoctorID,
+    d.FirstName,
+    d.LastName,
+    d.DoctorType;
+
+
+
+SELECT *
+FROM Appointment_Summary
+ORDER BY AppointmentDate, AppointmentTime;
+
+DROP TRIGGER IF EXISTS TRG_Patient_Before_Insert;
+
+
+
+DROP TRIGGER IF EXISTS TRG_Patient_Before_Insert;
+
+DELIMITER //
+
+CREATE TRIGGER TRG_Patient_Before_Insert
+BEFORE INSERT ON Patient
+FOR EACH ROW
+BEGIN
+    IF NEW.DateOfBirth > CURDATE() THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT =
+            'Date of birth cannot be later than the current date';
+    END IF;
+END//
+
+DELIMITER ;
+
+INSERT INTO Patient
+    (FirstName, LastName, DateOfBirth, Gender, Phone, RegistrationDate)
+VALUES
+    ('Test', 'Patient', '2030-01-01', 'Male',
+     '0599999999', CURRENT_DATE);
