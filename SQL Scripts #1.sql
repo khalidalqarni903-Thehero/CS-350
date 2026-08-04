@@ -23,8 +23,7 @@ CREATE TABLE Patient (
         UNIQUE (Email)
 );
 
-
--- 2. Doctor superclass table
+      
 CREATE TABLE Doctor (
     DoctorID INT UNSIGNED AUTO_INCREMENT,
     FirstName VARCHAR(50) NOT NULL,
@@ -767,6 +766,9 @@ GROUP BY
     d.FirstName,
     d.LastName,
     d.DoctorType;
+
+
+
 
 
 
