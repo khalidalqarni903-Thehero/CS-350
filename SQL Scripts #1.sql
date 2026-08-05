@@ -803,3 +803,12 @@ INSERT INTO Patient
 VALUES
     ('Test', 'Patient', '2030-01-01', 'Male',
      '0599999999', CURRENT_DATE);
+Patient Management (Patient): Created the patient table with unique constraints on email and phone number to prevent duplicate records.
+
+Doctor Inheritance Hierarchy (Doctor Superclass & Subtypes): Implemented an Enhanced ER (EER) model splitting doctors into a base Doctor table and three specialized sub-tables (General_Practitioner, Specialist_Doctor, Surgeon_Doctor) linked via 1:1 Foreign Keys with CASCADE rules.
+
+Appointment System (Appointment): Built the scheduling logic using a composite UNIQUE constraint on (DoctorID, AppointmentDate, AppointmentTime) to prevent double-booking doctors.
+
+Treatment Tracking (Treatment): Linked medical treatments directly to appointments with automated cascade deletion.
+
+Data Integrity Constraints: Applied CHECK constraints for valid numerical ranges (experience and cost \ge 0) and ENUM data types for status tracking
