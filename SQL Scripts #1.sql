@@ -22,8 +22,9 @@ CREATE TABLE Patient (
     CONSTRAINT UQ_Patient_Email
         UNIQUE (Email)
 );
+--8
+      --1  --3
 
-      
 CREATE TABLE Doctor (
     DoctorID INT UNSIGNED AUTO_INCREMENT,
     FirstName VARCHAR(50) NOT NULL,
