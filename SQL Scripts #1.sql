@@ -22,7 +22,7 @@ CREATE TABLE Patient (
     CONSTRAINT UQ_Patient_Email
         UNIQUE (Email)
 );
---8
+--8 --7
       --1  --3
 
 CREATE TABLE Doctor (
