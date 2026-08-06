@@ -23,7 +23,7 @@ CREATE TABLE Patient (
         UNIQUE (Email)
 );
 --8 --7
-      --1  --3
+--6      --1  --3
 
 CREATE TABLE Doctor (
     DoctorID INT UNSIGNED AUTO_INCREMENT,
